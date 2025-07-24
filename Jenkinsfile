@@ -13,9 +13,17 @@ pipeline {
             }
         }
 
+        stage('Preparar entorno de pruebas') {
+            steps {
+                // Dar permisos de ejecución a los binarios de node_modules
+                sh 'chmod +x node_modules/.bin/jest'
+            }
+        }
+
         stage('Ejecutar tests') {
             steps {
-                sh 'npm test'
+                // Puedes usar --ci --runInBand si es necesario para entornos como Jenkins
+                sh 'npm test -- --ci --runInBand'
             }
         }
 
