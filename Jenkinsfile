@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs "nodejs24"
-        dockerTool "dockertools" 
+        nodejs "Node18"
+        dockerTool "Dockertool" 
     }
 
     stages {
@@ -13,16 +13,9 @@ pipeline {
             }
         }
 
-        stage('Preparar entorno de pruebas') {
+        stage('Ejecutar Tests') {
             steps {
-                // Dar permisos de ejecución a los binarios de node_modules
-                sh 'chmod +x node_modules/.bin/jest'
-            }
-        }
-
-        stage('Ejecutar tests') {
-            steps {
-                // Puedes usar --ci --runInBand si es necesario para entornos como Jenkins
+                sh 'chmod +x ./node_modules/.bin/jest'  // Soluciona el problema de permisos
                 sh 'npm test -- --ci --runInBand'
             }
         }
